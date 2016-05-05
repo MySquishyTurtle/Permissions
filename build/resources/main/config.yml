@@ -1,0 +1,11 @@
+players:
+  ff0b4c92-edc5-4474-a145-04a433c9e485:
+    name: MySquishyTurtle
+    groups: []
+    permissions: []
+
+groups:
+  default:
+    permissions: []
+    inheritance: []
+    priority: 0
