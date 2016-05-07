@@ -14,17 +14,19 @@ public class Permissions extends JavaPlugin {
         return instance;
     }
 
+    @Override
     public void onEnable() {
         instance = this;
         configHandler = ConfigHandler.getInstance();
         getConfig().options().copyDefaults(true);
         saveConfig();
-        Bukkit.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
         configHandler.loadGroups();
         configHandler.loadAllPlayers();
+        Bukkit.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
         getLogger().info("Permissions loaded.");
     }
 
+    @Override
     public void onDisable() {
         configHandler.saveGroups();
         configHandler.saveAllPlayers();

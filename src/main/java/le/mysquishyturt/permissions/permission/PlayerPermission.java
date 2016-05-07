@@ -6,6 +6,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.permissions.PermissionAttachment;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,6 +47,10 @@ public class PlayerPermission {
         return groups.containsKey(name);
     }
 
+    public Collection<Group> getGroups() {
+        return groups.values();
+    }
+
     public void addPermission(Permission permission) {
         permissions.put(permission.getName(), permission);
     }
@@ -56,6 +61,10 @@ public class PlayerPermission {
 
     public boolean hasPermission(String name) {
         return permissions.containsKey(name);
+    }
+
+    public Collection<Permission> getPermissions() {
+        return permissions.values();
     }
 
     public void buildPermissions() {

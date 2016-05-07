@@ -10,6 +10,7 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
+        ConfigHandler.getInstance().addPlayerToConfig(event.getPlayer().getUniqueId());
         ConfigHandler.getInstance().loadPlayerPermissions(event.getPlayer().getUniqueId());
     }
 

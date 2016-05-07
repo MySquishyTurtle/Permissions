@@ -5,6 +5,7 @@ import le.mysquishyturt.permissions.group.Group;
 import le.mysquishyturt.permissions.permission.Permission;
 import le.mysquishyturt.permissions.permission.PlayerPermission;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.MemorySection;
 import org.bukkit.configuration.file.FileConfiguration;
 
@@ -19,8 +20,8 @@ public class ConfigHandler {
 
     private static ConfigHandler instance;
     Permissions plugin;
-    Map<UUID, PlayerPermission> onlinePlayers;
-    Map<String, Group> groups;
+    HashMap<UUID, PlayerPermission> onlinePlayers;
+    HashMap<String, Group> groups;
 
     private ConfigHandler() {
         plugin = Permissions.getInstance();
@@ -35,6 +36,17 @@ public class ConfigHandler {
         return instance;
     }
 
+    public void addPlayerToConfig(UUID uuid) {
+        if(plugin.getConfig().getConfigurationSection("players." + uuid) == null) {
+            OfflinePlayer player = Bukkit.getOfflinePlayer(uuid);
+            String path = "players." + uuid + ".";
+
+            plugin.getConfig().set(path + "name", player.getName());
+            plugin.getConfig().set(path + "permissions", new ArrayList<>());
+            plugin.getConfig().set(path + "groups", new ArrayList<>());
+        }
+    }
+
     public void loadPlayerPermissions(UUID uuid) {
         Map<String, Object> playerNode = plugin.getConfig().getConfigurationSection("players." + uuid).getValues(false);
         PlayerPermission playerPermission = new PlayerPermission(uuid, Bukkit.getPlayer(uuid).addAttachment(plugin));
@@ -44,6 +56,9 @@ public class ConfigHandler {
             }
             for (Permission permission : getPermissionList((List<String>) playerNode.get("permissions"))) {
                 playerPermission.addPermission(permission);
+            }
+            if (playerPermission.getGroups().size() == 0 && this.groups.containsKey("default")) {
+                playerPermission.addGroup(this.groups.get("default"));
             }
         }
         playerPermission.buildPermissions();
@@ -103,7 +118,7 @@ public class ConfigHandler {
     }
 
     public void saveAllPlayers() {
-        onlinePlayers.keySet().stream().forEach(this::savePlayerPermissions);
+        ((HashMap<UUID, PlayerPermission>) onlinePlayers.clone()).keySet().stream().forEach(this::savePlayerPermissions);
     }
 
     private List<Permission> getPermissionList(List<String> perms) {
