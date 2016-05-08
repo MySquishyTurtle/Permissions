@@ -36,6 +36,14 @@ public class ConfigHandler {
         return instance;
     }
 
+    public HashMap<UUID, PlayerPermission> getOnlinePlayers() {
+        return this.onlinePlayers;
+    }
+
+    public HashMap<String, Group> getGroups() {
+        return this.groups;
+    }
+
     public void addPlayerToConfig(UUID uuid) {
         if(plugin.getConfig().getConfigurationSection("players." + uuid) == null) {
             OfflinePlayer player = Bukkit.getOfflinePlayer(uuid);
@@ -113,12 +121,30 @@ public class ConfigHandler {
         loadAllPlayers();
     }
 
+    public boolean isGroup(String name) {
+        return groups.containsKey(name.toLowerCase());
+    }
+
+    public Group getGroup(String name) {
+        return groups.get(name.toLowerCase());
+    }
+
+    public void reloadPlayer(UUID uuid) {
+        savePlayerPermissions(uuid);
+        plugin.saveConfig();
+        loadPlayerPermissions(uuid);
+    }
+
     public void loadAllPlayers() {
         Bukkit.getOnlinePlayers().stream().forEach(player -> loadPlayerPermissions(player.getUniqueId()));
     }
 
     public void saveAllPlayers() {
         ((HashMap<UUID, PlayerPermission>) onlinePlayers.clone()).keySet().stream().forEach(this::savePlayerPermissions);
+    }
+
+    public PlayerPermission getPlayerPermission(UUID uuid) {
+        return onlinePlayers.get(uuid);
     }
 
     private List<Permission> getPermissionList(List<String> perms) {

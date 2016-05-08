@@ -27,5 +27,14 @@
     <orderEntry type="library" exported="" name="Gradle: org.hamcrest:hamcrest-core:1.1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.google.code.gson:gson:2.3.1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.google.guava:guava:18.0" level="project" />
+    <orderEntry type="module-library" exported="">
+      <library name="Gradle: command-framework-bukkit-0.6-SNAPSHOT">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/libs/command-framework-bukkit-0.6-SNAPSHOT.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
