@@ -16,7 +16,7 @@ You must include whether the permission is given or taken from the player by add
    inheritance:
    - default
    priority: 1
-     admin:
+ admin:
    permissions:
    - bukkit.command.mute:true
    inheritance:
