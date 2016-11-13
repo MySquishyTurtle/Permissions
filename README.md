@@ -2,9 +2,10 @@
 
 
 An example of a permissions file can be seen below. It is important that the format be followed, otherwise the permissions will not load properly.
-You must include whether the permission is given or taken from the player by adding "true" or "false" at the end of the permission node. Note that the permissions used here may or may not exist, they were just examples.groups:
+You must include whether the permission is given or taken from the player by adding "true" or "false" at the end of the permission node. Note that the permissions used here may or may not exist, they were just examples.
 
 ~~~
+groups:
  default:  
    permissions:   
    - bukkit.command.me:false 
